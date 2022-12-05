@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Handle, Position } from "reactflow";
 import { AiFillMessage, AiOutlineMore, AiOutlineClose } from "react-icons/ai";
 import { FaEnvelope } from "react-icons/fa";
@@ -15,10 +15,6 @@ const ContactNode = ({ data }) => {
     setBtnVisibility(!btnVisibility);
     console.log(btnVisibility);
   };
-
-  const onChange = useCallback((evt) => {
-    console.log(evt.target.value);
-  }, []);
 
   return (
     <div className="greeting-node relative shadow">
