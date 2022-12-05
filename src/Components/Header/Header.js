@@ -20,12 +20,11 @@ const Header = () => {
         </div>
 
         <div className="flex justify-end items-center">
-          <button className="btn btn-outline  text-white btn-sm border border-gray-400">
+          <button className="btn btn-outline   btn-sm border border-gray-400">
             <FaCaretRight className="mr-2" />
             Preview Demo
           </button>
-          <button className="btn btn-primary  text-white btn-sm ml-3">
-            <FaCaretRight className="mr-2" />
+          <button className="btn btn-primary text-white btn-sm ml-3">
             Publish Now
           </button>
         </div>
