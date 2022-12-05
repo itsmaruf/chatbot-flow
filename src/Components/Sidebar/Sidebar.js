@@ -14,9 +14,23 @@ const Sidebar = () => {
   return (
     <div className="floating-sidebar">
       <h2 className="text-lg font-bold">Nodes</h2>
-      <div className="divider"></div>
 
-      <div className="items">
+      <div className="tabs my-3 flex justify-between items-center">
+        <button className="btn bg-white hover:bg-white text-black border-0 active hover:border-0 btn-sm hover:shadow-lg">
+          Steps
+        </button>
+        <button className="btn bg-white hover:bg-white text-black border-0 hover:border-0 btn-sm hover:shadow-lg">
+          Logic
+        </button>
+        <button className="btn bg-white hover:bg-white text-black border-0 hover:border-0 btn-sm hover:shadow-lg">
+          Trigger
+        </button>
+        <button className="btn bg-white hover:bg-white text-black border-0 hover:border-0 btn-sm hover:shadow-lg">
+          API
+        </button>
+      </div>
+
+      <div className="items mt-3">
         <div
           className="dndnode p-2 font-bold rounded-md border-gray flex items-center my-2 justify-between"
           onDragStart={(event) => onDragStart(event, "start")}
