@@ -8,8 +8,6 @@ import GreetingNode from "../Nodes/GreetingNode";
 import ReactFlow, {
   ReactFlowProvider,
   Background,
-  applyEdgeChanges,
-  applyNodeChanges,
   useNodesState,
   useEdgesState,
   addEdge,
@@ -39,7 +37,7 @@ const initialNodes = [];
 // edges will be an array of objects with the following properties
 
 // make the edges array empty to put the new edges
-const initialEdges = [];
+// const initialEdges = [];
 
 const TestFlow = () => {
   const reactFlowWrapper = useRef(null);
