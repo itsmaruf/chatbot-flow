@@ -15,12 +15,16 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import StartNode from "../Nodes/StartNode";
 import CatalogNode from "../Nodes/CatalogNode";
+import PackageTrackingNode from "../Nodes/PackageTrackingNode";
+import ContactNode from "../Nodes/ContactNode";
 
 // initiate node types
 const nodeTypes = {
   greeting: GreetingNode,
   start: StartNode,
   catalog: CatalogNode,
+  packageTracker: PackageTrackingNode,
+  contact: ContactNode,
 };
 
 // creating nodes
@@ -47,7 +51,23 @@ const initialNodes = [
     type: "catalog",
     position: {
       x: 800,
-      y: 0,
+      y: 50,
+    },
+  },
+  {
+    id: "n-4",
+    type: "packageTracker",
+    position: {
+      x: 800,
+      y: 350,
+    },
+  },
+  {
+    id: "n-5",
+    type: "contact",
+    position: {
+      x: 800,
+      y: 650,
     },
   },
 ];
