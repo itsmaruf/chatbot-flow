@@ -1,13 +1,17 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
+import "./TestFlow.css";
 
 // import custom nodes
 import GreetingNode from "../Nodes/GreetingNode";
 
 // react flow import
 import ReactFlow, {
+  ReactFlowProvider,
   Background,
   applyEdgeChanges,
   applyNodeChanges,
+  useNodesState,
+  useEdgesState,
   addEdge,
 } from "reactflow";
 
@@ -29,48 +33,7 @@ const nodeTypes = {
 
 // creating nodes
 // nodes will be an array of objects with the following properties
-const initialNodes = [
-  {
-    id: "n-1",
-    type: "greeting",
-    position: {
-      x: 300,
-      y: 200,
-    },
-  },
-  {
-    id: "n-2",
-    type: "start",
-    position: {
-      x: 50,
-      y: 300,
-    },
-  },
-  {
-    id: "n-3",
-    type: "catalog",
-    position: {
-      x: 800,
-      y: 50,
-    },
-  },
-  {
-    id: "n-4",
-    type: "packageTracker",
-    position: {
-      x: 800,
-      y: 350,
-    },
-  },
-  {
-    id: "n-5",
-    type: "contact",
-    position: {
-      x: 800,
-      y: 650,
-    },
-  },
-];
+const initialNodes = [];
 
 // creating edges
 // edges will be an array of objects with the following properties
@@ -79,28 +42,72 @@ const initialNodes = [
 const initialEdges = [];
 
 const TestFlow = () => {
+  const reactFlowWrapper = useRef(null);
   // state for edges
-  const [edges, setEdges] = useState(initialEdges);
+  //   const [edges, setEdges] = useState(initialEdges);
 
-  //   state for nodes
-  const [nodes, setNodes] = useState(initialNodes);
+  //   //   state for nodes
+  //   const [nodes, setNodes] = useState(initialNodes);
 
-  //   create a function that will check the node changes
-  const onNodeChange = useCallback(
-    (changes) => setNodes(applyNodeChanges(changes, nodes)),
-    [nodes]
-  );
-
-  // create a function that will check the edge changes
-  const onEdgeChange = useCallback(
-    (changes) => setEdges(applyEdgeChanges(changes, edges)),
-    [edges]
-  );
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
   //   create a function to connect the nodes
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
+  );
+
+  //   create a function that will check the node changes
+  //   const onNodeChange = useCallback(
+  //     (changes) => setNodes(applyNodeChanges(changes, nodes)),
+  //     [nodes]
+  //   );
+
+  //   // create a function that will check the edge changes
+  //   const onEdgeChange = useCallback(
+  //     (changes) => setEdges(applyEdgeChanges(changes, edges)),
+  //     [edges]
+  //   );
+
+  //   const reactFlowWrapper = useRef(null);
+
+  // initiate drags
+  const onDragOver = useCallback((event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }, []);
+
+  let id = 0;
+  const getId = () => `dndnode_${id++}`;
+
+  const onDrop = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+      const type = event.dataTransfer.getData("application/reactflow");
+
+      // check if the dropped element is valid
+      if (typeof type === "undefined" || !type) {
+        return;
+      }
+
+      const position = reactFlowInstance.project({
+        x: event.clientX - reactFlowBounds.left,
+        y: event.clientY - reactFlowBounds.top,
+      });
+      const newNode = {
+        id: getId(),
+        type,
+        position,
+        data: { label: `${type} node` },
+      };
+
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [reactFlowInstance]
   );
 
   //   state for selected node
@@ -110,25 +117,28 @@ const TestFlow = () => {
 
   return (
     // react flow
-    <div
-      style={{
-        height: "100vh",
-        borderTop: "1px solid rgba(0,0,0,0.1)",
-        marginTop: "10px",
-      }}
-    >
+    <div>
       {/* ractflow will take nodes and edges as props */}
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodeChange}
-        onEdgesChange={onEdgeChange}
-        onConnect={onConnect}
-        nodeTypes={nodeTypes}
-      >
-        <Background></Background>
-        {/* <Controls></Controls> */}
-      </ReactFlow>
+      <div className="dndflow">
+        <ReactFlowProvider>
+          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onConnect={onConnect}
+              nodeTypes={nodeTypes}
+              onInit={setReactFlowInstance}
+              onDrop={onDrop}
+              onDragOver={onDragOver}
+            >
+              <Background></Background>
+              {/* <Controls></Controls> */}
+            </ReactFlow>
+          </div>
+        </ReactFlowProvider>
+      </div>
     </div>
   );
 };
