@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Handle, Position } from "reactflow";
 import { AiFillMessage, AiOutlineMore, AiOutlineClose } from "react-icons/ai";
-import { FaEnvelope } from "react-icons/fa";
 
 import "./Nodes.css";
 const ResultNode = ({ data }) => {
@@ -13,10 +11,6 @@ const ResultNode = ({ data }) => {
     setLocalStorageData(localStorage);
     // console.log(localStorageData);
   }, [localStorageData]);
-
-  const leftTop = {
-    top: 40,
-  };
 
   const visibilityHandler = () => {
     setBtnVisibility(!btnVisibility);
