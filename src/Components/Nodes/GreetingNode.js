@@ -37,7 +37,6 @@ const GreetingNode = ({ data }) => {
 
   return (
     <div className="greeting-node relative shadow">
-      <Handle type="target" position={Position.Left} style={leftTop}></Handle>
       <div>
         <div className="node-header flex justify-between items-center">
           <div className="flex justify-start items-center">
@@ -111,13 +110,19 @@ const GreetingNode = ({ data }) => {
         </div>
       )}
       <Handle
-        id="a"
+        id="greeting-target"
+        type="target"
+        position={Position.Left}
+        style={leftTop}
+      ></Handle>
+      <Handle
+        id="greeting-source-1"
         type="source"
         position={Position.Right}
         style={{ top: 300 }}
       ></Handle>
       <Handle
-        id="b"
+        id="greeting-source-2"
         type="source"
         position={Position.Right}
         style={{ top: 363 }}

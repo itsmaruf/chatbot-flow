@@ -20,6 +20,7 @@ import StartNode from "../Nodes/StartNode";
 import CatalogNode from "../Nodes/CatalogNode";
 import PackageTrackingNode from "../Nodes/PackageTrackingNode";
 import ContactNode from "../Nodes/ContactNode";
+import ResultNode from "../Nodes/ResultNode";
 
 // initiate node types
 const nodeTypes = {
@@ -28,6 +29,7 @@ const nodeTypes = {
   catalog: CatalogNode,
   packageTracker: PackageTrackingNode,
   contact: ContactNode,
+  result: ResultNode,
 };
 
 // creating nodes
@@ -48,17 +50,26 @@ const TestFlow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
-  //   create a function to connect the nodes
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
-
   // initiate drags
   const onDragOver = useCallback((event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
+
+  const isValidConnection = (connection) => {
+    // eslint-disable-next-line no-unused-expressions
+    connection.target === "X";
+  };
+  const onConnectStart = (_, { nodeId, handleType }) =>
+    console.log("on connect start", { nodeId, handleType });
+
+  const onConnectEnd = (event) => console.log("on connect end", event);
+
+  //   create a function to connect the nodes
+  const onConnect = useCallback(
+    (params) => setEdges((eds) => addEdge(params, eds)),
+    []
+  );
 
   let id = 0;
   const getId = () => `node_${id++}`;
@@ -77,7 +88,7 @@ const TestFlow = () => {
 
       const deleteNode = (id) => {
         setNodes((nds) => nds.filter((n) => n.id !== `node_${id - 1}`));
-        console.log("deleted");
+        // console.log("deleted");
       };
 
       const position = reactFlowInstance.project({
@@ -88,7 +99,7 @@ const TestFlow = () => {
         id: getId(),
         type,
         position,
-        data: { label: `${type} node`, id: id, deleteNode },
+        data: { label: `${type} node`, id: id, deleteNode, isValidConnection },
         deleteNode,
       };
 
@@ -97,24 +108,30 @@ const TestFlow = () => {
     [reactFlowInstance]
   );
 
-  console.log(nodes);
+  // console.log(nodes);
 
   const onEdgeUpdateStart = useCallback(() => {
     edgeUpdateSuccessful.current = false;
   }, []);
 
-  const onEdgeUpdate = useCallback((oldEdge, newConnection) => {
-    edgeUpdateSuccessful.current = true;
-    setEdges((els) => updateEdge(oldEdge, newConnection, els));
-  }, []);
+  const onEdgeUpdate = useCallback(
+    (oldEdge, newConnection) => {
+      edgeUpdateSuccessful.current = true;
+      setEdges((els) => updateEdge(oldEdge, newConnection, els));
+    },
+    [setEdges]
+  );
 
-  const onEdgeUpdateEnd = useCallback((_, edge) => {
-    if (!edgeUpdateSuccessful.current) {
-      setEdges((eds) => eds.filter((e) => e.id !== edge.id));
-    }
+  const onEdgeUpdateEnd = useCallback(
+    (_, edge) => {
+      if (!edgeUpdateSuccessful.current) {
+        setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+      }
 
-    edgeUpdateSuccessful.current = true;
-  }, []);
+      edgeUpdateSuccessful.current = true;
+    },
+    [setEdges]
+  );
 
   //   state for selected node
   //   const [selectedNode, setSelectedNode] = useState(null);
@@ -142,6 +159,9 @@ const TestFlow = () => {
               onEdgeUpdate={onEdgeUpdate}
               onEdgeUpdateStart={onEdgeUpdateStart}
               onEdgeUpdateEnd={onEdgeUpdateEnd}
+              onConnectStart={onConnectStart}
+              onConnectEnd={onConnectEnd}
+              selectNodesOnDrag={false}
               // deleteNode
             >
               <Background></Background>

@@ -5,6 +5,7 @@ import { VscDebugStart } from "react-icons/vsc";
 import { MdWavingHand, MdOutlineConnectWithoutContact } from "react-icons/md";
 import { GrCatalog, GrDrag } from "react-icons/gr";
 import { FiPackage } from "react-icons/fi";
+import { TbSum } from "react-icons/tb";
 
 const Sidebar = () => {
   const onDragStart = (event, nodeType) => {
@@ -78,6 +79,16 @@ const Sidebar = () => {
         >
           <div className="flex justify-start items-center">
             <MdOutlineConnectWithoutContact className="mr-2" /> Contact
+          </div>
+          <GrDrag />
+        </div>
+        <div
+          className="dndnode p-2 font-bold rounded-md border-gray flex items-center my-2 justify-between"
+          onDragStart={(event) => onDragStart(event, "result")}
+          draggable
+        >
+          <div className="flex justify-start items-center">
+            <TbSum className="mr-2" /> Result
           </div>
           <GrDrag />
         </div>

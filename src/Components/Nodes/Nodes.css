@@ -35,3 +35,6 @@ textarea{
 .node-module{
     margin: 20px auto !important;
 }
+.result-node {
+    max-width: 350px;
+}

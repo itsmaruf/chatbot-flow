@@ -4,7 +4,7 @@ import { BsArrowReturnRight } from "react-icons/bs";
 
 import "./Nodes.css";
 
-const StartNode = () => {
+const StartNode = ({ isValidConnection }) => {
   return (
     <div className="start-node">
       <button className="btn btn-primary text-white rounded-full">
@@ -12,7 +12,12 @@ const StartNode = () => {
         Start Flow
       </button>
 
-      <Handle id="a"  type="source" position={Position.Right}></Handle>
+      <Handle
+        id="start-source"
+        type="source"
+        position={Position.Right}
+        isValidConnection={isValidConnection}
+      ></Handle>
     </div>
   );
 };

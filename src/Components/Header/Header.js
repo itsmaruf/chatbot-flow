@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { FaArrowLeft, FaCaretRight } from "react-icons/fa";
 
 const Header = () => {
   const publishHandler = () => {
-    // get all items from local storage
-    
-    localStorage.clear();
+    // localStorage.clear();
   };
   return (
     <div>
