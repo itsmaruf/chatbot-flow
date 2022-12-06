@@ -21,6 +21,7 @@ import CatalogNode from "../Nodes/CatalogNode";
 import PackageTrackingNode from "../Nodes/PackageTrackingNode";
 import ContactNode from "../Nodes/ContactNode";
 import ResultNode from "../Nodes/ResultNode";
+import NestedNode from "../Nodes/NestedNode";
 
 // initiate node types
 const nodeTypes = {
@@ -30,6 +31,7 @@ const nodeTypes = {
   packageTracker: PackageTrackingNode,
   contact: ContactNode,
   result: ResultNode,
+  nested: NestedNode,
 };
 
 // creating nodes
