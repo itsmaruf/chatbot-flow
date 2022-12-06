@@ -3,6 +3,11 @@ import React from "react";
 import { FaArrowLeft, FaCaretRight } from "react-icons/fa";
 
 const Header = () => {
+  const publishHandler = () => {
+    // get all items from local storage
+    
+    localStorage.clear();
+  };
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -24,7 +29,10 @@ const Header = () => {
             <FaCaretRight className="mr-2" />
             Preview Demo
           </button>
-          <button className="btn btn-primary text-white btn-sm ml-3">
+          <button
+            className="btn btn-primary text-white btn-sm ml-3"
+            onClick={publishHandler}
+          >
             Publish Now
           </button>
         </div>

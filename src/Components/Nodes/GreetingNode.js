@@ -26,8 +26,11 @@ const GreetingNode = ({ data }) => {
   };
 
   const onChange = useCallback((evt) => {
+    const value = evt.target.value;
+    localStorage.setItem(evt.target.name, JSON.stringify(value));
     console.log(evt.target.value);
   }, []);
+
   return (
     <div className="greeting-node relative shadow">
       <Handle type="target" position={Position.Left} style={leftTop}></Handle>
@@ -51,6 +54,7 @@ const GreetingNode = ({ data }) => {
             <TextArea
               onChange={onChange}
               rows={1}
+              name="text1"
               placeHolder={"write something"}
               value={"👋"}
             ></TextArea>
@@ -59,6 +63,7 @@ const GreetingNode = ({ data }) => {
             <TextArea
               onChange={onChange}
               rows={3}
+              name="text2"
               placeHolder={"write something"}
               value={
                 "Hey there! Welcome to our store, I'm your bot assistant. Let me know how can I help you:"

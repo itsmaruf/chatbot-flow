@@ -11,6 +11,7 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   addEdge,
+  updateEdge,
 } from "reactflow";
 
 // REACT-FLOW CSS
@@ -41,6 +42,7 @@ const initialNodes = [];
 
 const TestFlow = () => {
   const reactFlowWrapper = useRef(null);
+  const edgeUpdateSuccessful = useRef(true);
   // state for edges
   //   const [edges, setEdges] = useState(initialEdges);
 
@@ -108,6 +110,23 @@ const TestFlow = () => {
     [reactFlowInstance]
   );
 
+  const onEdgeUpdateStart = useCallback(() => {
+    edgeUpdateSuccessful.current = false;
+  }, []);
+
+  const onEdgeUpdate = useCallback((oldEdge, newConnection) => {
+    edgeUpdateSuccessful.current = true;
+    setEdges((els) => updateEdge(oldEdge, newConnection, els));
+  }, []);
+
+  const onEdgeUpdateEnd = useCallback((_, edge) => {
+    if (!edgeUpdateSuccessful.current) {
+      setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+    }
+
+    edgeUpdateSuccessful.current = true;
+  }, []);
+
   //   state for selected node
   //   const [selectedNode, setSelectedNode] = useState(null);
 
@@ -130,6 +149,10 @@ const TestFlow = () => {
               onInit={setReactFlowInstance}
               onDrop={onDrop}
               onDragOver={onDragOver}
+              snapToGrid
+              onEdgeUpdate={onEdgeUpdate}
+              onEdgeUpdateStart={onEdgeUpdateStart}
+              onEdgeUpdateEnd={onEdgeUpdateEnd}
             >
               <Background></Background>
               {/* <Controls></Controls> */}

@@ -16,6 +16,8 @@ const CatalogNode = ({ data }) => {
   };
 
   const onChange = useCallback((evt) => {
+    const value = evt.target.value;
+    localStorage.setItem(evt.target.name, JSON.stringify(value));
     console.log(evt.target.value);
   }, []);
 
@@ -43,7 +45,7 @@ const CatalogNode = ({ data }) => {
             <select
               onChange={onChange}
               className="select border border-gray w-full"
-              name=""
+              name="catalog"
               id=""
             >
               <option value="Catalogue 1" className="option">

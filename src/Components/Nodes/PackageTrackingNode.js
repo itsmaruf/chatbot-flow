@@ -16,6 +16,8 @@ const PackageTrackingNode = ({ data }) => {
   };
 
   const onChange = useCallback((evt) => {
+    const value = evt.target.value;
+    localStorage.setItem(evt.target.name, JSON.stringify(value));
     console.log(evt.target.value);
   }, []);
 
@@ -43,7 +45,7 @@ const PackageTrackingNode = ({ data }) => {
             <input
               type="text"
               className="input border-gray w-full"
-              name=""
+              name="package_id"
               id=""
               placeholder="Please input the ID of your package"
               onChange={onChange}
@@ -53,7 +55,7 @@ const PackageTrackingNode = ({ data }) => {
             <input
               type="text"
               className="input border-gray w-full"
-              name=""
+              name="reply_id"
               id=""
               placeholder="input reply to package_id"
               onChange={onChange}
