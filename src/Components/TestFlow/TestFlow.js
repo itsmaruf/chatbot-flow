@@ -43,11 +43,6 @@ const initialNodes = [];
 const TestFlow = () => {
   const reactFlowWrapper = useRef(null);
   const edgeUpdateSuccessful = useRef(true);
-  // state for edges
-  //   const [edges, setEdges] = useState(initialEdges);
-
-  //   //   state for nodes
-  //   const [nodes, setNodes] = useState(initialNodes);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -59,20 +54,6 @@ const TestFlow = () => {
     [setEdges]
   );
 
-  //   create a function that will check the node changes
-  //   const onNodeChange = useCallback(
-  //     (changes) => setNodes(applyNodeChanges(changes, nodes)),
-  //     [nodes]
-  //   );
-
-  //   // create a function that will check the edge changes
-  //   const onEdgeChange = useCallback(
-  //     (changes) => setEdges(applyEdgeChanges(changes, edges)),
-  //     [edges]
-  //   );
-
-  //   const reactFlowWrapper = useRef(null);
-
   // initiate drags
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -80,7 +61,7 @@ const TestFlow = () => {
   }, []);
 
   let id = 0;
-  const getId = () => `dndnode_${id++}`;
+  const getId = () => `node_${id++}`;
 
   const onDrop = useCallback(
     (event) => {
@@ -94,6 +75,11 @@ const TestFlow = () => {
         return;
       }
 
+      const deleteNode = (id) => {
+        setNodes((nds) => nds.filter((n) => n.id !== `node_${id - 1}`));
+        console.log("deleted");
+      };
+
       const position = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
@@ -102,13 +88,16 @@ const TestFlow = () => {
         id: getId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: { label: `${type} node`, id: id, deleteNode },
+        deleteNode,
       };
 
       setNodes((nds) => nds.concat(newNode));
     },
     [reactFlowInstance]
   );
+
+  console.log(nodes);
 
   const onEdgeUpdateStart = useCallback(() => {
     edgeUpdateSuccessful.current = false;
@@ -153,6 +142,7 @@ const TestFlow = () => {
               onEdgeUpdate={onEdgeUpdate}
               onEdgeUpdateStart={onEdgeUpdateStart}
               onEdgeUpdateEnd={onEdgeUpdateEnd}
+              // deleteNode
             >
               <Background></Background>
               {/* <Controls></Controls> */}

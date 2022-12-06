@@ -16,6 +16,10 @@ const ContactNode = ({ data }) => {
     console.log(btnVisibility);
   };
 
+  const deleteNode = (id) => {
+    data.deleteNode(id);
+  };
+
   return (
     <div className="greeting-node relative shadow">
       <div>
@@ -52,8 +56,13 @@ const ContactNode = ({ data }) => {
 
       {btnVisibility && (
         <div className="node-menu absolute top-14 right-5">
-          <button className="btn btn-sm text-black hover:text-white text-xsm bg-white inline-block w-auto">
-            Option
+          <button
+            onClick={() => {
+              deleteNode(data.id);
+            }}
+            className="btn btn-sm text-black hover:text-white text-xsm bg-white inline-block w-auto"
+          >
+            Delete
           </button>
         </div>
       )}

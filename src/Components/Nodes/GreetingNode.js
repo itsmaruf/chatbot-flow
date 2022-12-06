@@ -22,7 +22,11 @@ const GreetingNode = ({ data }) => {
 
   const visibilityHandler = () => {
     setBtnVisibility(!btnVisibility);
-    console.log(btnVisibility);
+    // console.log(btnVisibility);
+  };
+
+  const deleteNode = (id) => {
+    data.deleteNode(id);
   };
 
   const onChange = useCallback((evt) => {
@@ -96,8 +100,13 @@ const GreetingNode = ({ data }) => {
 
       {btnVisibility && (
         <div className="node-menu absolute top-14 right-5">
-          <button className="btn btn-sm text-black hover:text-white text-xsm bg-white inline-block w-auto">
-            Option
+          <button
+            onClick={() => {
+              deleteNode(data.id);
+            }}
+            className="btn btn-sm text-black hover:text-white text-xsm bg-white inline-block w-auto"
+          >
+            Delete
           </button>
         </div>
       )}

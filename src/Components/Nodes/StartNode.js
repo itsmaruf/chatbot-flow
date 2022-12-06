@@ -12,7 +12,7 @@ const StartNode = () => {
         Start Flow
       </button>
 
-      <Handle id="a" type="source" position={Position.Right}></Handle>
+      <Handle id="a"  type="source" position={Position.Right}></Handle>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { AiFillMessage, AiOutlineMore, AiOutlineClose } from "react-icons/ai";
 
 import "./Nodes.css";
 const PackageTrackingNode = ({ data }) => {
+  console.log(data.id);
   const [btnVisibility, setBtnVisibility] = useState(false);
 
   const leftTop = {
@@ -20,6 +21,10 @@ const PackageTrackingNode = ({ data }) => {
     localStorage.setItem(evt.target.name, JSON.stringify(value));
     console.log(evt.target.value);
   }, []);
+
+  const deleteNode = (id) => {
+    data.deleteNode(id);
+  };
 
   return (
     <div className="greeting-node relative shadow">
@@ -66,8 +71,13 @@ const PackageTrackingNode = ({ data }) => {
 
       {btnVisibility && (
         <div className="node-menu absolute top-14 right-5">
-          <button className="btn btn-sm text-black hover:text-white text-xsm bg-white inline-block w-auto">
-            Option
+          <button
+            onClick={() => {
+              deleteNode(data.id);
+            }}
+            className="btn btn-sm text-black hover:text-white text-xsm bg-white inline-block w-auto"
+          >
+            Delete
           </button>
         </div>
       )}
