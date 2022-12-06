@@ -6,6 +6,7 @@ const Header = () => {
   const publishHandler = () => {
     // localStorage.clear();
   };
+
   return (
     <div>
       <div className="flex justify-between items-center">

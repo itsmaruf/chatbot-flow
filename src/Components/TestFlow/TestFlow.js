@@ -68,7 +68,7 @@ const TestFlow = () => {
   //   create a function to connect the nodes
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
-    []
+    [setEdges]
   );
 
   let id = 0;
@@ -138,6 +138,14 @@ const TestFlow = () => {
 
   //   state for selected edge
 
+  const edgeOptions = {
+    animated: true,
+    style: {
+      stroke: "#1592E0",
+      strokeWidth: 2,
+    },
+  };
+
   return (
     // react flow
     <div>
@@ -161,6 +169,7 @@ const TestFlow = () => {
               onEdgeUpdateEnd={onEdgeUpdateEnd}
               onConnectStart={onConnectStart}
               onConnectEnd={onConnectEnd}
+              defaultEdgeOptions={edgeOptions}
               selectNodesOnDrag={false}
               // deleteNode
             >
