@@ -149,7 +149,7 @@ const TestFlow = () => {
   return (
     // react flow
     <div>
-      {/* ractflow will take nodes and edges as props */}
+      {/* reactflow will take nodes and edges as props */}
       <div className="dndflow">
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
