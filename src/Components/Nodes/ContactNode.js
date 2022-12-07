@@ -13,7 +13,7 @@ const ContactNode = ({ data }) => {
 
   const visibilityHandler = () => {
     setBtnVisibility(!btnVisibility);
-    console.log(btnVisibility);
+    // console.log(btnVisibility);
   };
 
   const deleteNode = (id) => {

@@ -66,7 +66,7 @@ const TestFlow = () => {
     }
   };
 
-  const onConnectEnd = (event) => console.log("on connect end", event);
+  const onConnectEnd = (event, nodeId) => console.log("connected with", nodeId);
 
   //   create a function to connect the nodes
   const onConnect = useCallback(
@@ -108,8 +108,12 @@ const TestFlow = () => {
       };
 
       const deleteNode = (id) => {
-        setNodes((nds) => nds.filter((n) => n.id !== `node_${id - 1}`));
-        // console.log("deleted");
+        if (type === "packageTracker") {
+          setNodes((nds) => nds.filter((n) => n.id !== "package"));
+        } else {
+          setNodes((nds) => nds.filter((n) => n.id !== `${type}`));
+          // console.log(id);
+        }
       };
 
       const position = reactFlowInstance.project({
@@ -125,6 +129,7 @@ const TestFlow = () => {
       };
 
       setNodes((nds) => nds.concat(newNode));
+      // console.log(nodes);
     },
     [reactFlowInstance]
   );
