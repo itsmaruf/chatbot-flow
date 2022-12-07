@@ -4,7 +4,7 @@ import { AiFillMessage, AiOutlineMore, AiOutlineClose } from "react-icons/ai";
 
 import "./Nodes.css";
 const PackageTrackingNode = ({ data }) => {
-  console.log(data.id);
+  // console.log(data.id);
   const [btnVisibility, setBtnVisibility] = useState(false);
 
   const leftTop = {
@@ -29,7 +29,12 @@ const PackageTrackingNode = ({ data }) => {
   return (
     <div className="greeting-node relative shadow">
       <div>
-        <Handle type="target" position={Position.Left} style={leftTop}></Handle>
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={leftTop}
+          isValidConnection={data.isValidConnection}
+        ></Handle>
 
         <div className="node-header flex justify-between items-center">
           <div className="flex justify-start items-center">

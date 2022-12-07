@@ -20,6 +20,14 @@ const leftTop = {
 const GreetingNode = ({ data }) => {
   const [btnVisibility, setBtnVisibility] = useState(false);
 
+  const isValidConnectionCatalog = (connection) =>
+    connection.target === "catalog";
+
+  const isValidConnectionPackage = (connection) =>
+    connection.target === "package";
+
+  const isValidConnectionContact = (connection) =>
+    connection.target === "contact";
   const visibilityHandler = () => {
     setBtnVisibility(!btnVisibility);
     // console.log(btnVisibility);
@@ -120,18 +128,21 @@ const GreetingNode = ({ data }) => {
         type="source"
         position={Position.Right}
         style={{ top: 300 }}
+        isValidConnection={isValidConnectionCatalog}
       ></Handle>
       <Handle
         id="greeting-source-2"
         type="source"
         position={Position.Right}
         style={{ top: 363 }}
+        isValidConnection={isValidConnectionPackage}
       ></Handle>
       <Handle
         id="c"
         type="source"
         position={Position.Right}
         style={{ top: 425 }}
+        isValidConnection={isValidConnectionContact}
       ></Handle>
     </div>
   );

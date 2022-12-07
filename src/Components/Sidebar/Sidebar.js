@@ -93,7 +93,7 @@ const Sidebar = () => {
           </div>
           <GrDrag />
         </div>
-        <div
+        {/* <div
           className="dndnode p-2 font-bold rounded-md border-gray flex items-center my-2 justify-between"
           onDragStart={(event) => onDragStart(event, "nested")}
           draggable
@@ -102,7 +102,7 @@ const Sidebar = () => {
             <BsListNested className="mr-2" /> Nested
           </div>
           <GrDrag />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -31,7 +31,7 @@ const nodeTypes = {
   packageTracker: PackageTrackingNode,
   contact: ContactNode,
   result: ResultNode,
-  nested: NestedNode,
+  // nested: NestedNode,
 };
 
 // creating nodes
@@ -58,12 +58,13 @@ const TestFlow = () => {
     event.dataTransfer.dropEffect = "move";
   }, []);
 
-  const isValidConnection = (connection) => {
-    // eslint-disable-next-line no-unused-expressions
-    connection.target === "X";
-  };
-  const onConnectStart = (_, { nodeId, handleType }) =>
+  const onConnectStart = (_, { nodeId, handleType }) => {
     console.log("on connect start", { nodeId, handleType });
+
+    if (nodeId === "start") {
+      localStorage.clear();
+    }
+  };
 
   const onConnectEnd = (event) => console.log("on connect end", event);
 
@@ -74,7 +75,6 @@ const TestFlow = () => {
   );
 
   let id = 0;
-  const getId = () => `node_${id++}`;
 
   const onDrop = useCallback(
     (event) => {
@@ -87,6 +87,25 @@ const TestFlow = () => {
       if (typeof type === "undefined" || !type) {
         return;
       }
+
+      let getId;
+      if (type === "greeting") {
+        getId = () => `greeting`;
+      } else if (type === "start") {
+        getId = () => `start`;
+      } else if (type === "catalog") {
+        getId = () => `catalog`;
+      } else if (type === "packageTracker") {
+        getId = () => `package`;
+      } else if (type === "contact") {
+        getId = () => `contact`;
+      } else {
+        getId = () => `node_${id++}`;
+      }
+      const isValidConnection = (connection) => {
+        // eslint-disable-next-line no-unused-expressions
+        connection.target === getId();
+      };
 
       const deleteNode = (id) => {
         setNodes((nds) => nds.filter((n) => n.id !== `node_${id - 1}`));

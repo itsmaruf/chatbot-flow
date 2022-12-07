@@ -4,7 +4,8 @@ import { BsArrowReturnRight } from "react-icons/bs";
 
 import "./Nodes.css";
 
-const StartNode = ({ isValidConnection }) => {
+const StartNode = () => {
+  const isValidConnection = (connection) => connection.target === "greeting";
   return (
     <div className="start-node">
       <button className="btn btn-primary text-white rounded-full">
@@ -15,6 +16,7 @@ const StartNode = ({ isValidConnection }) => {
       <Handle
         id="start-source"
         type="source"
+        // target="greeting"
         position={Position.Right}
         isValidConnection={isValidConnection}
       ></Handle>
