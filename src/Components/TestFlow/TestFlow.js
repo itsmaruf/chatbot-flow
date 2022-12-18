@@ -21,7 +21,6 @@ import CatalogNode from "../Nodes/CatalogNode";
 import PackageTrackingNode from "../Nodes/PackageTrackingNode";
 import ContactNode from "../Nodes/ContactNode";
 import ResultNode from "../Nodes/ResultNode";
-import NestedNode from "../Nodes/NestedNode";
 
 // initiate node types
 const nodeTypes = {
@@ -131,6 +130,7 @@ const TestFlow = () => {
       setNodes((nds) => nds.concat(newNode));
       // console.log(nodes);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [reactFlowInstance]
   );
 
